@@ -26,16 +26,26 @@ class RowToVector:
             for index, letter in enumerate(word):
                 if ord(word[index]) > 122 or ord(word[index]) < 65:
                     non_letter_sign += 1
-        return non_letter_sign / self.number_of_words()
+        return non_letter_sign / self.num_of_characters()
 
     def has_link(self) -> bool:
-        return re.search(
-            "((http|https)\:\/\/)?[a-zA-Z0-9\.\/\?\:@\-_=#]+\.([a-zA-Z]){2,6}([a-zA-Z0-9\.\&\/\?\:@\-_=#])*", ''.join(self.row)) is None
+        return len(re.findall(
+            'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+] |[!*\(\), ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', ''.join(self.row))) > 0
 
     def percentage_of_capital_letters(self) -> float:
-        non_letter_sign = 0
+        capital_letters = 0
         for word in self.row:
             for index, letter in enumerate(word):
-                if ord(word[index]) > 64 or ord(word[index]) < 91:
-                    non_letter_sign += 1
-        return non_letter_sign / self.number_of_words()
+                if ord(word[index]) > 64 and ord(word[index]) < 91:
+                    capital_letters += 1
+        return capital_letters / self.num_of_characters()
+
+    def num_of_characters(self):
+        number_of_characters = 0
+        for word in self.row:
+            for letter in word:
+                number_of_characters += len(letter)
+        return number_of_characters
+
+    def format(self):
+        return (self.vector)

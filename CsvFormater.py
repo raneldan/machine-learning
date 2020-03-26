@@ -13,4 +13,5 @@ with open(filename,'r',encoding="utf8") as csvin,\
     csvoutForFeatures = csv.writer(csvoutForFeatures)
     for row in csvin:
         csvoutForTags.writerow([row[0]])
-        csvoutForFeatures.writerow(RowToVector(row[1:]))
+        csvoutForData.writerow(row[1:])
+        csvoutForFeatures.writerow(RowToVector(row[1:]).vector)
