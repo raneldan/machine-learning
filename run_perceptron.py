@@ -3,13 +3,19 @@ from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import LabelEncoder
 import numpy as np
 from perceptron_algo import Perceptron
+from CsvFormater import create_files
+import os
+
+features_file_name = "features.csv"
 
 def to_np_num(list_of_str):
     temp = np.array(list_of_str)
     ans = temp.astype(np.float)
     return ans
 
-features_file_name = "features.csv"
+if (os.path.exists(features_file_name)):
+    os.remove(features_file_name)
+create_files()
 features_file = open(features_file_name,'r',encoding="utf8")
 lines = features_file.read().splitlines()
 training_inputs = list(map(lambda line: list(line.split(",")), lines))

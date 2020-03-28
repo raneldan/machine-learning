@@ -16,6 +16,8 @@ class RowToVector:
         self.funcs.append(self.percentage_of_non_letters)
         self.funcs.append(self.has_link)
         self.funcs.append(self.percentage_of_capital_letters)
+        self.funcs.append(self.num_of_numbers)
+        self.funcs.append(self.has_free)
 
     def number_of_words(self) -> int:
         return len(self.row)
@@ -28,9 +30,9 @@ class RowToVector:
                     non_letter_sign += 1
         return non_letter_sign / self.num_of_characters()
 
-    def has_link(self) -> bool:
-        return len(re.findall(
-            'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+] |[!*\(\), ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', ''.join(self.row))) > 0
+    def has_link(self) -> int:
+        return 1 if len(re.findall(
+            'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+] |[!*\(\), ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', ''.join(self.row))) > 0 else 0
 
     def percentage_of_capital_letters(self) -> float:
         capital_letters = 0
@@ -46,6 +48,17 @@ class RowToVector:
             for letter in word:
                 number_of_characters += len(letter)
         return number_of_characters
+
+    def num_of_numbers(self):
+        numbers = 0
+        for word in self.row:
+            for index, letter in enumerate(word):
+                if ord(word[index]) > 30 and ord(word[index]) < 39:
+                    numbers += 1
+        return numbers
+
+    def has_free(self):
+        return 1 if re.search('free', ''.join(self.row)) else 0
 
     def format(self):
         return (self.vector)
