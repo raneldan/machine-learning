@@ -18,6 +18,8 @@ class RowToVector:
         self.funcs.append(self.percentage_of_capital_letters)
         self.funcs.append(self.num_of_numbers)
         self.funcs.append(self.has_free)
+        self.funcs.append(self.has_xxx)
+        self.funcs.append(self.has_price)
 
     def number_of_words(self) -> int:
         return len(self.row)
@@ -59,6 +61,12 @@ class RowToVector:
 
     def has_free(self):
         return 1 if re.search('free', ''.join(self.row)) else 0
+
+    def has_xxx(self):
+        return 1 if re.search('xxx', ''.join(self.row), re.IGNORECASE) else 0
+
+    def has_price(self):
+        return 1 if re.search('£', ''.join(self.row)) else 0
 
     def format(self):
         return (self.vector)
