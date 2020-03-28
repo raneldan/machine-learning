@@ -53,7 +53,7 @@ class RowToVector:
         numbers = 0
         for word in self.row:
             for index, letter in enumerate(word):
-                if ord(word[index]) > 30 and ord(word[index]) < 39:
+                if ord(word[index]) >= 48 and ord(word[index]) <= 57:
                     numbers += 1
         return numbers
 
