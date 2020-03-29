@@ -17,10 +17,11 @@ class RowToVector:
         self.funcs.append(self.has_link)
         self.funcs.append(self.percentage_of_capital_letters)
         self.funcs.append(self.num_of_numbers)
-        #self.funcs.append(self.has_free)
-        #self.funcs.append(self.has_xxx)
-        #self.funcs.append(self.has_price)
-        #self.funcs.append(self.has_txt)
+        self.funcs.append(self.has_re)
+        self.funcs.append(self.has_free)
+        self.funcs.append(self.has_xxx)
+        self.funcs.append(self.has_price)
+        self.funcs.append(self.has_txt)
 
     def number_of_words(self) -> int:
         return len(self.row)
@@ -71,6 +72,9 @@ class RowToVector:
 
     def has_txt(self):
         return 1 if re.search('txt', ''.join(self.row)) else 0
+
+    def has_re(self):
+        return 1 if re.search('Subject:re:', ''.join(self.row)) else 0
 
     def format(self):
         return (self.vector)

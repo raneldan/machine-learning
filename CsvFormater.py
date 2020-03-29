@@ -19,9 +19,8 @@ def create_email_files():
         csvoutForFeatures = csv.writer(csvoutForFeatures)
         for row in csvin:
             csvoutForTags.writerow([row[1]])
-            x = row[2]
             csvoutForData.writerow([row[2]])
-            csvoutForFeatures.writerow(RowToVector(row[2]).vector)
+            csvoutForFeatures.writerow(RowToVector([row[2]]).vector)
 
 def create_sms_files():
     with open(filenameSms, 'r', encoding="utf8") as csvin,\
