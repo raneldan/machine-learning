@@ -6,21 +6,21 @@ from perceptron_algo import Perceptron
 from CsvFormater import create_files
 import os
 
-features_file_name = "features.csv"
+features_file_name = "featuresEmail.csv"
 
 def to_np_num(list_of_str):
     temp = np.array(list_of_str)
     ans = temp.astype(np.float)
     return ans
 
-if (os.path.exists(features_file_name)):
-    os.remove(features_file_name)
-create_files()
+#if (os.path.exists(features_file_name)):
+    #os.remove(features_file_name)
+#create_files()
 features_file = open(features_file_name,'r',encoding="utf8")
 lines = features_file.read().splitlines()
 training_inputs = list(map(lambda line: list(line.split(",")), lines))
 
-tags_file_name = "tags.csv"
+tags_file_name = "tagsEmail.csv"
 tags_file = open(tags_file_name,'r',encoding="utf8")
 labels = tags_file.read().splitlines()
 

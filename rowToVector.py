@@ -20,6 +20,7 @@ class RowToVector:
         self.funcs.append(self.has_free)
         self.funcs.append(self.has_xxx)
         self.funcs.append(self.has_price)
+        self.funcs.append(self.has_txt)
 
     def number_of_words(self) -> int:
         return len(self.row)
@@ -67,6 +68,9 @@ class RowToVector:
 
     def has_price(self):
         return 1 if re.search('£', ''.join(self.row)) else 0
+
+    def has_txt(self):
+        return 1 if re.search('txt', ''.join(self.row)) else 0
 
     def format(self):
         return (self.vector)
