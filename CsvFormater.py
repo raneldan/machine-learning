@@ -17,7 +17,11 @@ def create_email_files():
         csvoutForTags = csv.writer(csvoutForTags)
         csvoutForData = csv.writer(csvoutForData)
         csvoutForFeatures = csv.writer(csvoutForFeatures)
+        x = 0
         for row in csvin:
+            if (x == 71):
+                x = 71
+            x += 1
             csvoutForTags.writerow([row[1]])
             csvoutForData.writerow([row[2]])
             csvoutForFeatures.writerow(RowToVector([row[2]]).vector)

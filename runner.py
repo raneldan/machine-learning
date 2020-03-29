@@ -8,7 +8,7 @@ sms_tags_file_name = "tags.csv"
 email_features_file_name = "featuresEmail.csv"
 email_tags_file_name = "tagsEmail.csv"
 
-num_of_runs = 1
+num_of_runs = 10
 
 if (os.path.exists(sms_features_file_name)):
     os.remove(sms_features_file_name)
