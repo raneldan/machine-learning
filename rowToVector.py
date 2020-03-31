@@ -18,11 +18,11 @@ class RowToVector:
         self.funcs.append(self.percentage_of_capital_letters)
         self.funcs.append(self.num_of_numbers)
         self.funcs.append(self.has_re)
-        #self.funcs.append(self.has_free)
-        #self.funcs.append(self.has_xxx)
-        #self.funcs.append(self.has_price)
-        #self.funcs.append(self.has_txt)
-        #self.funcs.append(self.has_no_title)
+        self.funcs.append(self.has_free)
+        self.funcs.append(self.has_xxx)
+        self.funcs.append(self.has_price)
+        self.funcs.append(self.has_txt)
+        self.funcs.append(self.has_no_title)
 
     def number_of_words(self) -> int:
         return len(self.row)
