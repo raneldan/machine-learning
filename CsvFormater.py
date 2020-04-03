@@ -24,7 +24,7 @@ def create_email_files():
             x += 1
             csvoutForTags.writerow([row[1]])
             csvoutForData.writerow([row[2]])
-            csvoutForFeatures.writerow(RowToVector([row[2]]).vector)
+            csvoutForFeatures.writerow(RowToVector([row[2]], is_email=True).vector)
 
 def create_sms_files():
     with open(filenameSms, 'r', encoding="utf8") as csvin,\

@@ -3,24 +3,28 @@ import re
 
 
 class RowToVector:
-    def __init__(self, row: List[str]):
+    def __init__(self, row: List[str], is_email: bool = False):
         self.row: List[str] = [word for line in row for word in line.split()]
         self.funcs: List = []
         self.vector = []
-        self.__init_funcs()
+        self.__init_funcs(is_email)
         for func in self.funcs:
             self.vector.append(func())
 
-    def __init_funcs(self):
+    def __init_funcs(self, is_email: bool = False):
+        if is_email:
+            self.funcs.append(self.number_of_money_ref)
+        else:
+            self.funcs.append(self.has_free)
+            self.funcs.append(self.has_price)
+
         self.funcs.append(self.number_of_words)
         self.funcs.append(self.percentage_of_non_letters)
         self.funcs.append(self.has_link)
         self.funcs.append(self.percentage_of_capital_letters)
         self.funcs.append(self.num_of_numbers)
         self.funcs.append(self.has_re)
-        self.funcs.append(self.has_free)
         self.funcs.append(self.has_xxx)
-        self.funcs.append(self.has_price)
         self.funcs.append(self.has_txt)
         self.funcs.append(self.has_no_title)
 
@@ -37,7 +41,8 @@ class RowToVector:
 
     def has_link(self) -> int:
         return 1 if len(re.findall(
-            'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+] |[!*\(\), ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', ''.join(self.row))) > 0 else 0
+            'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+] |[!*\(\), ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
+            ''.join(self.row))) > 0 else 0
 
     def percentage_of_capital_letters(self) -> float:
         capital_letters = 0
@@ -61,6 +66,11 @@ class RowToVector:
                 if ord(word[index]) >= 48 and ord(word[index]) <= 57:
                     numbers += 1
         return numbers
+
+    def number_of_money_ref(self):
+        money_items = (
+            re.findall('free|money|$|price|offer|special|now|award|deal|cheap', ''.join(self.row), re.IGNORECASE))
+        return len(money_items) if money_items[0] != '' else 0
 
     def has_free(self):
         return 1 if re.search('free', ''.join(self.row)) else 0
