@@ -13,7 +13,9 @@ class RowToVector:
 
     def __init_funcs(self, is_email: bool = False):
         if is_email:
+            pass
             self.funcs.append(self.number_of_money_ref)
+            self.funcs.append(self.number_of_marketing_ref)
         else:
             self.funcs.append(self.has_free)
             self.funcs.append(self.has_price)
@@ -24,9 +26,9 @@ class RowToVector:
         self.funcs.append(self.percentage_of_capital_letters)
         self.funcs.append(self.num_of_numbers)
         self.funcs.append(self.has_re)
+        self.funcs.append(self.has_no_title)
         self.funcs.append(self.has_xxx)
         self.funcs.append(self.has_txt)
-        self.funcs.append(self.has_no_title)
 
     def number_of_words(self) -> int:
         return len(self.row)
@@ -66,6 +68,12 @@ class RowToVector:
                 if ord(word[index]) >= 48 and ord(word[index]) <= 57:
                     numbers += 1
         return numbers
+
+    def number_of_marketing_ref(self):
+        marketing_items = (
+            re.findall('click|email|sales|below|here|subscribe|Visit|our|website|promotion|Member', ''.join(self.row),
+                       re.IGNORECASE))
+        return 0 if ((not marketing_items) or marketing_items[0] == '') else len(marketing_items)
 
     def number_of_money_ref(self):
         money_items = (
