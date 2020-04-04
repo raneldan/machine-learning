@@ -13,7 +13,7 @@ class RowToVector:
 
     def __init_funcs(self, is_email: bool = False):
         if is_email:
-            pass
+            # self.funcs.append(self.number_of_long_sentences)
             self.funcs.append(self.number_of_money_ref)
             self.funcs.append(self.number_of_marketing_ref)
         else:
@@ -40,6 +40,10 @@ class RowToVector:
                 if ord(word[index]) > 122 or ord(word[index]) < 65:
                     non_letter_sign += 1
         return non_letter_sign / self.num_of_characters()
+
+    def number_of_long_sentences(self):
+        sentences = ' '.join(self.row).split('.')
+        return sum((list(map(lambda x: 1 if (len(x.split(' ')) > 4) else 0, sentences))))
 
     def has_link(self) -> int:
         return 1 if len(re.findall(
@@ -77,7 +81,7 @@ class RowToVector:
 
     def number_of_money_ref(self):
         money_items = (
-            re.findall('free|money|$|price|offer|special|now|award|deal|cheap', ''.join(self.row), re.IGNORECASE))
+            re.findall('free|money|$|price|offer|special|now|award|deal|cheap|save', ''.join(self.row), re.IGNORECASE))
         return len(money_items) if money_items[0] != '' else 0
 
     def has_free(self):
@@ -100,3 +104,7 @@ class RowToVector:
 
     def format(self):
         return (self.vector)
+
+
+r2v = RowToVector(["assd ffff ggg gggg ggg ggg gggg. sd."], True)
+print(r2v.number_of_long_sentences())
